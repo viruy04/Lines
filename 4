@@ -1,0 +1,45 @@
+#include <stdio.h>
+#include <string.h>
+
+void swapWords(char *str) {
+    char *maxWord = NULL, *minWord = NULL;
+    int maxLength = 0, minLength = 0;
+
+    char *token = strtok(str, " ");
+    
+    while (token != NULL) {
+        int len = strlen(token);
+        
+        if (maxWord == NULL || len > maxLength) {
+            maxWord = token;
+            maxLength = len;
+        }
+        
+        if (minWord == NULL || len < minLength || (minWord != NULL && minLength == 0)) {
+            minWord = token;
+            minLength = len;
+        }
+        
+        token = strtok(NULL, " ");
+    }
+
+    if (maxWord != NULL && minWord != NULL && strcmp(maxWord, minWord) != 0) {
+        char temp[100];
+        strcpy(temp, maxWord);
+        strcpy(maxWord, minWord);
+        strcpy(minWord, temp);
+    }
+}
+
+int main() {
+    char str[100];
+
+    printf("Введите строку: ");
+    fgets(str, 100, stdin);
+
+    swapWords(str);
+
+printf("Строка, в которой поменяны местами самые длинные и самые короткие слова: %s\n", str);
+
+    return 0;
+}
